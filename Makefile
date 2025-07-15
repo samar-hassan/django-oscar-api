@@ -10,6 +10,9 @@ clean:
 install:
 	pip install -e .[dev] --upgrade --upgrade-strategy=eager --pre
 
+install-latest:
+	pip install -e .[dev] --upgrade --upgrade-strategy=eager --pre
+
 sandbox: install
 	python sandbox/manage.py migrate
 	python sandbox/manage.py loaddata attributeoption country orderanditemcharges productattribute productclass voucher attributeoptiongroup offer partner productattributevalue productimage category option product productcategory stockrecord

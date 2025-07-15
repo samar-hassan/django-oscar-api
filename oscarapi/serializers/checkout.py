@@ -49,12 +49,12 @@ class PriceSerializer(serializers.Serializer):
     currency = serializers.CharField(
         max_length=12, default=django_settings.OSCAR_DEFAULT_CURRENCY, required=False
     )
-    excl_tax = serializers.DecimalField(decimal_places=2, max_digits=12, required=True)
+    excl_tax = serializers.DecimalField(decimal_places=4, max_digits=12, required=True)
     incl_tax = TaxIncludedDecimalField(
-        excl_tax_field="excl_tax", decimal_places=2, max_digits=12, required=False
+        excl_tax_field="excl_tax", decimal_places=4, max_digits=12, required=False
     )
     tax = TaxIncludedDecimalField(
-        excl_tax_value="0.00", decimal_places=2, max_digits=12, required=False
+        excl_tax_value="0.00", decimal_places=4, max_digits=12, required=False
     )
 
 
@@ -118,16 +118,14 @@ class OrderLineAttributeSerializer(OscarHyperlinkedModelSerializer):
 
     class Meta:
         model = OrderLineAttribute
-        fields = "__all__"
+        fields = ["url", "option", "value"]
 
 
 class OrderLineSerializer(OscarHyperlinkedModelSerializer):
     "This serializer renames some fields so they match up with the basket"
 
     url = serializers.HyperlinkedIdentityField(view_name="order-lines-detail")
-    attributes = OrderLineAttributeSerializer(
-        many=True, fields=("url", "option", "value"), required=False
-    )
+    attributes = OrderLineAttributeSerializer(many=True, required=False)
     price_currency = serializers.CharField(source="order.currency", max_length=12)
     price_excl_tax = serializers.DecimalField(
         decimal_places=2, max_digits=12, source="line_price_excl_tax"
