@@ -22,9 +22,8 @@ test:
 	python sandbox/manage.py test oscarapi --settings=sandbox.settings.block_admin_api_false
 
 coverage:
-	pwd
-	python -c "import sys; print(sys.path)"
-	PYTHONPATH=./ coverage run sandbox/manage.py test oscarapi --settings=sandbox.settings.block_admin_api_true
+	PYTHONPATH=$(PWD)
+	coverage run sandbox/manage.py test oscarapi --settings=sandbox.settings.block_admin_api_true
 	coverage run sandbox/manage.py test oscarapi --settings=sandbox.settings.block_admin_api_false
 	coverage report -m
 	coverage xml -i
