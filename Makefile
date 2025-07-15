@@ -22,6 +22,7 @@ test:
 	python sandbox/manage.py test oscarapi --settings=sandbox.settings.block_admin_api_false
 
 coverage:
+	pwd
 	coverage run sandbox/manage.py test oscarapi --settings=sandbox.settings.block_admin_api_true
 	coverage run sandbox/manage.py test oscarapi --settings=sandbox.settings.block_admin_api_false
 	coverage report -m
